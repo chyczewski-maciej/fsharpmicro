@@ -1,0 +1,7 @@
+storage: none
+source https://api.nuget.org/v3/index.json
+
+nuget FSharp.Core
+nuget Giraffe
+nuget Microsoft.AspNetCore
+nuget Microsoft.AspNetCore.StaticFiles
