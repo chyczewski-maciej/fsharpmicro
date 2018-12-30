@@ -7,9 +7,16 @@ open Giraffe
 [<CLIMutable>]
 type User = { Login : string; Password : string }
 let admin = { Login = "admin"; Password="admin123" }
+
+let authenticate user = 
+    let authenticated = (user = admin)
+    if (authenticated) then printf "User %s logged in succesfully" user.Login
+    authenticated
 let webApp =
     choose [
-        POST >=> route "/login" >=> bindJson<User>(fun user -> setStatusCode (if (user = admin) then 200 else 401))
+        POST >=> route "/login" >=> bindJson<User>(fun user -> 
+            let statusCode = if(authenticate user) then 200 else 401   
+            setStatusCode statusCode)
     ]
 
 let configureApp (app : IApplicationBuilder) =
